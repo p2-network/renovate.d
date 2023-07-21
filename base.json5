@@ -1,0 +1,116 @@
+{
+  extends: [
+    "config:base",
+    ":semanticCommits",
+    ":semanticCommitTypeAll(chore)",
+    "workarounds:typesNodeVersioning"
+  ],
+  labels: [
+    "dependencies"
+  ],
+  schedule: [
+    "on the first day of the month"
+  ],
+  updateLockFiles: true,
+  assignAutomerge: true,
+  vulnerabilityAlerts: {
+    enabled: true,
+    automerge: true,
+  },
+  packageRules: [
+    {
+      matchDatasources: [
+        "npm",
+      ],
+      transitiveRemediation: true,
+    },
+    {
+      matchManagers: [
+        "bundler",
+        "dockerfile",
+        "docker-compose",
+        "github-actions",
+        "swift",
+        "ruby-version",
+        "nvm",
+        "pip_requirements"
+      ],
+      groupName: "dependencies",
+      matchUpdateTypes: [
+        "patch",
+        "minor",
+      ],
+    },
+    {
+      matchManagers: [
+        "npm",
+      ],
+      matchDepTypes: [
+        "devDependencies"
+      ],
+      groupName: "dependencies",
+      matchUpdateTypes: [
+        "patch",
+        "minor",
+        "major"
+      ]
+    },
+    {
+      matchManagers: [
+        "npm",
+      ],
+      matchDepTypes: [
+        "dependencies",
+        "peerDependencies"
+      ],
+      groupName: "dependencies",
+      matchUpdateTypes: [
+        "patch",
+        "minor"
+      ]
+    },
+    {
+      matchManagers: [
+        "npm",
+      ],
+      matchDepTypes: [
+        "dependencies",
+        "peerDependencies"
+      ],
+      groupName: "dependencies-major",
+      matchUpdateTypes: [
+        "major"
+      ]
+    },
+    {
+      matchManagers: [
+        "bundler",
+        "dockerfile",
+        "docker-compose",
+        "github-actions",
+        "swift",
+        "nvm",
+        "pip_requirements"
+      ],
+      groupName: "dependencies-major",
+      matchUpdateTypes: [
+        "major"
+      ]
+    },
+    // updates the `engines` version in `package.json`
+    {
+      matchManagers: [
+        "npm",
+      ],
+      commitBody: "BREAKING CHANGE: Updating language runtime versions",
+      commitMessagePrefix: 'chore(deps)!:',
+      matchDepTypes: [
+        "engines"
+      ],
+      groupName: "dependencies-major",
+      matchUpdateTypes: [
+        "major"
+      ],
+    },
+  ],
+}

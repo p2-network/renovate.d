@@ -33,7 +33,8 @@
         "swift",
         "ruby-version",
         "nvm",
-        "pip_requirements"
+        "pip_requirements",
+        "poetry",
       ],
       groupName: "dependencies",
       matchUpdateTypes: [
@@ -90,7 +91,8 @@
         "github-actions",
         "swift",
         "nvm",
-        "pip_requirements"
+        "pip_requirements",
+        "poetry",
       ],
       groupName: "dependencies-major",
       matchUpdateTypes: [
